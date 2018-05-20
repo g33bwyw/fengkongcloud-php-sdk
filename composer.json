@@ -1,0 +1,26 @@
+{
+    "name": "liugj/sh-single-purpose-prepaid-card-sdk",
+    "description": "上海单用途预付卡",
+    "keywords": ["上海单用途预付卡", "Shanghai Single Purpose Prepaid Card Sdk"],
+    "license": "MIT",
+        "authors": [
+        {
+            "name": "liugj",
+            "email": "liugj@boqii.com"
+        }
+        ],
+        "require": {
+             "php": ">=7.0",
+            "guzzlehttp/guzzle": "^6.2"
+        },
+      "require-dev": {
+          "phpunit/phpunit": "~5",
+          "friendsofphp/php-cs-fixer": "^2.3",
+          "sllh/php-cs-fixer-styleci-bridge": "dev-master"
+      },
+        "autoload": {
+            "psr-4": {
+                "Liugj\\Csb\\": "src/"
+            }
+        }
+}
