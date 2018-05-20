@@ -26,7 +26,7 @@ class PrepaidCard
      *
      * @var string
      */
-    protected $requestUrl = 'http://101.132.39.129:8086/CSB"';
+    protected $requestUrl = 'http://101.132.39.129:8086/CSB';
     /**
      * ak Access Key.
      *
@@ -85,9 +85,7 @@ class PrepaidCard
      */
     public function sendCard(array $card = [])
     {
-        $headers = ['name' => 'sendCardsService'];
-
-        return $this->request(['dataMap' => $card], $headers);
+        return $this->request('sendCardsService', ['dataMap' => $card]);
     }
 
     /**
@@ -99,6 +97,7 @@ class PrepaidCard
      */
     public function addRecharge(array $recharge = [])
     {
+        return $this->request('addRechargeService', ['dataMap' => $recharge]);
     }
 
     /**
@@ -110,6 +109,7 @@ class PrepaidCard
      */
     public function addConsumption(array $consumption = [])
     {
+        return $this->request('addConsumptionService', ['dataMap' => $consumption]);
     }
 
     /**
@@ -143,8 +143,8 @@ class PrepaidCard
     protected function request(string $api = '', array $params = [])
     {
         $randomKey = $this->getRandomKey();
-        $symmetricKeyEncrpt = '';
-        $jsonDataEncrypt = aes($randomKey, json_encode($params));
+        $symmetricKeyEncrpt = (new Rsa($this->submissionPass))->encrypt($randomKey);
+        $jsonDataEncrypt = (new Aes($symmetricKeyEncrpt))->encrypt(json_encode($params));
         $body = [
             'dataMap' => json_encode([
                 'uniqueNo' => $this->uniqueNo,
@@ -152,14 +152,31 @@ class PrepaidCard
                 'jsonDataEncrypt' => $jsonDataEncrypt,
             ]),
         ];
+
         $headers = [];
         $headers['_api_name'] = $api;
         $headers['_api_version'] = $this->version;
-        $headers['_api_ak'] = $this->ak;
-
+        $headers['_api_access_key'] = $this->ak;
+        $headers['_api_timestamp'] = $this->getMillisTime();
         $headers['_api_signature'] = $this->sign($body, $headers);
 
-        return  $this->cbsClient->post($body, $headers);
+        return  $this->cbsClient->post('/CSB', $body, $headers);
+    }
+
+    /**
+     * getMillisTime 获取微秒 
+     * 
+     * 
+     * @access protected
+     * 
+     * @return mixed
+     */
+    protected function getMillisTime()
+    {
+        $microtime = microtime();
+        $comps = explode(' ', $microtime);
+
+        return sprintf('%d%03d', $comps[1], $comps[0] * 1000);
     }
 
     /**
@@ -179,7 +196,7 @@ class PrepaidCard
         }
 
         foreach ($headers as $k => $v) {
-            if (strncmp($k, '_api_', 5) == 0) {
+            if (strncmp($k, '_api_', 5) !== 0) {
                 continue;
             }
             $params[$k] = $v;

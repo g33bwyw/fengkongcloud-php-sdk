@@ -12,7 +12,6 @@
 namespace Liugj\Csb;
 
 use ArrayAccess;
-use Exception;
 use GuzzleHttp\Psr7\Response as GuzzleHttpResponse;
 use Iterator;
 
@@ -61,15 +60,13 @@ class Response implements Iterator, ArrayAccess
         $this->statusCode = $response->getStatusCode(); // 200
         $this->body = (string) $response->getBody();
 
-        if (!isset($this->headers['X-Api-Proxy']) || !$this->headers['X-Api-Proxy']) {
-            if ($this->statusCode != 200) {
-                $reason = $response->getReasonPhrase(); // OK
-                throw new Exception($reason, $this->statusCode);
-            }
-            $this->json = $this->json(true);
-            if (!isset($this->json['ResponseStatus']) || $this->json['ResponseStatus'] != 0) {
-                throw new Exception($this->json['ResponseMsg'], $this->json['ResponseStatus']);
-            }
+        if ($this->statusCode != 200) {
+            $reason = $response->getReasonPhrase(); // OK
+            throw new Exception($reason, $this->statusCode);
+        }
+        $this->json = $this->json(true);
+        if (!isset($this->json['code']) || $this->json['code'] != 200) {
+            throw new Exception($this->json['message'], $this->json['code']);
         }
     }
 
@@ -81,7 +78,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function toArray()
     {
-        return $this->json['ResponseData'];
+        return $this->json['body'];
     }
 
     /**
@@ -92,8 +89,8 @@ class Response implements Iterator, ArrayAccess
      */
     public function first()
     {
-        return isset($this->json['ResponseData']) && is_array($this->json['ResponseData']) ?
-                 current($this->json['ResponseData']) : null;
+        return isset($this->json['body']) && is_array($this->json['body']) ?
+                 current($this->json['body']) : null;
     }
 
     /**
@@ -132,7 +129,7 @@ class Response implements Iterator, ArrayAccess
     {
         $json = json_decode($this->body, $assoc);
         if (!$json) {
-            throw new \Liugj\Arch\Exception\JsonDecode(json_last_error_msg());
+            throw new \Liugj\Csb\Exception\JsonDecode(json_last_error_msg());
         }
 
         return $json;
@@ -171,7 +168,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function rewind()
     {
-        return reset($this->json['ResponseData']);
+        return reset($this->json['body']);
     }
 
     /**
@@ -183,7 +180,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function current()
     {
-        return current($this->json['ResponseData']);
+        return current($this->json['body']);
     }
 
     /**
@@ -195,7 +192,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function key()
     {
-        return key($this->json['ResponseData']);
+        return key($this->json['body']);
     }
 
     /**
@@ -207,7 +204,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function next()
     {
-        return next($this->json['ResponseData']);
+        return next($this->json['body']);
     }
 
     /**
@@ -219,8 +216,8 @@ class Response implements Iterator, ArrayAccess
      */
     public function valid()
     {
-        return is_array($this->json['ResponseData'])
-            && (key($this->json['ResponseData']) !== null);
+        return is_array($this->json['body'])
+            && (key($this->json['body']) !== null);
     }
 
     /**
@@ -232,8 +229,8 @@ class Response implements Iterator, ArrayAccess
      */
     public function offsetExists($key)
     {
-        return is_array($this->json['ResponseData']) ?
-            isset($this->json['ResponseData'][$key]) : false;
+        return is_array($this->json['body']) ?
+            isset($this->json['body'][$key]) : false;
     }
 
     /**
@@ -249,8 +246,8 @@ class Response implements Iterator, ArrayAccess
             return;
         }
 
-        return is_array($this->json['ResponseData']) ?
-            $this->json['ResponseData'][$key] : null;
+        return is_array($this->json['body']) ?
+            $this->json['body'][$key] : null;
     }
 
     /**
@@ -263,7 +260,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function offsetSet($key, $value)
     {
-        throw new \Liugj\Arch\Exception\ArrayAccess('Decoded response data is immutable.');
+        throw new \Liugj\Csb\Exception\ArrayAccess('Decoded response data is immutable.');
     }
 
     /**
@@ -275,7 +272,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function offsetUnset($key)
     {
-        throw new \Liugj\Arch\Exception\ArrayAccess('Decoded response data is immutable.');
+        throw new \Liugj\Csb\Exception\ArrayAccess('Decoded response data is immutable.');
     }
 
     /**
