@@ -52,11 +52,11 @@ class PrepaidCard
      */
     protected $submissionPass = '';
     /**
-     * cbsClient.
+     * csbClient.
      *
      * @var mixed
      */
-    protected $cbsClient = null;
+    protected $csbClient = null;
 
     /**
      * __construct.
@@ -73,7 +73,7 @@ class PrepaidCard
             }
         }
 
-        $this->cbsClient = (new CsbClient($this->requestUrl, $config['options'] ?? []));
+        $this->csbClient = (new CsbClient($this->requestUrl, $config['options'] ?? []));
     }
 
     /**
@@ -160,7 +160,7 @@ class PrepaidCard
         $headers['_api_timestamp'] = $this->getMillisTime();
         $headers['_api_signature'] = $this->sign($body, $headers);
 
-        return  $this->cbsClient->post('/CSB', $body, $headers);
+        return  $this->csbClient->post('/CSB', $body, $headers);
     }
 
     /**

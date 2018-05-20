@@ -1,7 +1,7 @@
 {
     "name": "liugj/sh-single-purpose-prepaid-card-sdk",
     "description": "上海单用途预付卡",
-    "keywords": ["上海单用途预付卡", "Shanghai Single Purpose Prepaid Card Sdk"],
+    "keywords": ["上海单用途预付卡", "Shanghai Single Purpose Prepaid Card Sdk", "laravel"],
     "license": "MIT",
         "authors": [
         {
