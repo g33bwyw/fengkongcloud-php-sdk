@@ -142,16 +142,19 @@ class PrepaidCard
      */
     protected function request(string $api = '', array $params = [])
     {
+       // $params = [];
         $randomKey = $this->getRandomKey();
         $symmetricKeyEncrpt = (new Rsa($this->submissionPass))->encrypt($randomKey);
         $jsonDataEncrypt = (new Aes($symmetricKeyEncrpt))->encrypt(json_encode($params));
-        $body = [
-            'dataMap' => json_encode([
-                'uniqueNo' => $this->uniqueNo,
-                'symmetricKeyEncrpt' => $symmetricKeyEncrpt,
-                'jsonDataEncrypt' => $jsonDataEncrypt,
-            ]),
+        $dataMap = [
+            'dataMap' => [
+                  'uniqueNo' => $this->uniqueNo,
+                  'symmetricKeyEncrpt' => $symmetricKeyEncrpt,
+                  'jsonDataEncrypt' => $jsonDataEncrypt,
+              ],
         ];
+        //$body = ['dataMap' => str_replace('"', '\"', json_encode($dataMap))];
+        $body = ['dataMap' =>  json_encode($dataMap)];
 
         $headers = [];
         $headers['_api_name'] = $api;
@@ -160,15 +163,20 @@ class PrepaidCard
         $headers['_api_timestamp'] = $this->getMillisTime();
         $headers['_api_signature'] = $this->sign($body, $headers);
 
-        return  $this->csbClient->post('/CSB', $body, $headers);
+        $response = $this->csbClient->post('/CSB', $body, $headers);
+        $body = $response->json(false)->body;
+        if ($body->dataMap->state != 0) {
+            throw  new Exception\Csb($body->dataMap->errorCode);
+        }
+
+        return $response;
     }
 
     /**
-     * getMillisTime 获取微秒 
-     * 
-     * 
-     * @access protected
-     * 
+     * getMillisTime 获取微秒.
+     *
+     *
+     *
      * @return mixed
      */
     protected function getMillisTime()

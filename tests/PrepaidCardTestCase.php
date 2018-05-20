@@ -34,8 +34,8 @@ class PrepaidTestCase extends TestCase
     public function testSendCardsService()
     {
         $param = [
-            'cardID' => '12311',
-            'cardNo' => '12311',
+            'cardID' => '123',
+            'cardNo' => '123',
             'cardMon' => '100',
             'serialNo' => '111',
             'cardBalance' => '1000',
