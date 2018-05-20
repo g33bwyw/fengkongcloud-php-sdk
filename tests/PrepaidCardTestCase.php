@@ -34,8 +34,8 @@ class PrepaidTestCase extends TestCase
     public function testSendCardsService()
     {
         $param = [
-            'cardID' => '123',
-            'cardNo' => '123',
+            'cardID' => '12311',
+            'cardNo' => '12311',
             'cardMon' => '100',
             'serialNo' => '111',
             'cardBalance' => '1000',
@@ -43,6 +43,22 @@ class PrepaidTestCase extends TestCase
             'beginDate' => '20181212',
             'expiryDate' => '20991231',
             'isRegister' => 0,
+        ];
+        $response = $this->prepaidCard->sendCard($param)->json(false);
+        var_dump($response);
+        $this->assertEquals(200, $response->code); 
+        $this->assertEquals('SUCCESS', $response->message); 
+    }
+    public function testAddRechargeService()
+    {
+        $param = [
+            'cardID' => '123114444',
+            'cardNo' => '123114444',
+            'cardMon' => '100ii',
+            'serialNo' => '111ee',
+            'cardBalance' => '1000',
+            'chargeTime' => '20180404000000',
+            'isOpenAcc' => 0,
         ];
         $response = $this->prepaidCard->sendCard($param)->json(false);
         var_dump($response);
