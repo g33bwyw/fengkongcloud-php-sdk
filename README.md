@@ -18,7 +18,7 @@ $app->register(Liugj\Csb\PrepaidCardServiceProvider::class);
 
 ## 配置
 
-增加配置文件 `config/sh-single-purpose-prepaid-card-sdk.php`` 
+增加配置文件 `config/sh-single-purpose-prepaid-card-sdk.php`
 
 ```php
 
@@ -34,8 +34,7 @@ return  [
 
 ```
 
-
-## Usage
+## 使用
 
 ```php
 use Liugj\Csb\PrepaidCardFacade;
@@ -51,8 +50,13 @@ $card = [
 	'isRegister' => '0',
 	'rev' => ''
 ];
-PrepaidCardFacade :: sendCard($card);
-PrepaidCardFacade :: addRecharge($recharge);
-PrepaidCardFacade :: addConsumption($consumption);
+
+PrepaidCardFacade :: sendCard($card); //发卡
+
+$recharge = [];
+PrepaidCardFacade :: addRecharge($recharge); //充值
+
+$consumption = [];
+PrepaidCardFacade :: addConsumption($consumption); //消费
 
 ```
