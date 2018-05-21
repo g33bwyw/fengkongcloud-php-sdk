@@ -13,7 +13,7 @@ namespace Liugj\Csb\Exception;
 
 use Exception;
 
-class Csb extends Exception
+class SinglePurposePrepaidCard extends Exception
 {
     /**
      * errCode 错误码

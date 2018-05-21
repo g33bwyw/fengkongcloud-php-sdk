@@ -164,7 +164,7 @@ class PrepaidCard
         $response = $this->csbClient->post('/CSB', $requestBody, $headers);
         $responseBody = $response->json(false)->body;
         if ($responseBody->dataMap->state != 0) {
-            throw  new Exception\Csb($responseBody->dataMap->errorCode);
+            throw  new Exception\SinglePurposePrepaidCard($responseBody->dataMap->errorCode);
         }
 
         return $response;
