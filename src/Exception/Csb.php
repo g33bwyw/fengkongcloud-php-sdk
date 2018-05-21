@@ -94,6 +94,6 @@ class Csb extends Exception
             '0RVA0001' => '私钥不存在',
         ];
 
-        return $messages[$errCode] ?: '系统未知错误';
+        return $messages[$errCode] ?? '单用途预付卡系统未知错误';
     }
 }

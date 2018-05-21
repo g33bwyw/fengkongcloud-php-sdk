@@ -11,7 +11,6 @@
 
 namespace Liugj\Csb;
 
-
 class Exception extends \Exception
 {
 }

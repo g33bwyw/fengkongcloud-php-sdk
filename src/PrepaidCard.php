@@ -142,10 +142,9 @@ class PrepaidCard
      */
     protected function request(string $api = '', array $params = [])
     {
-       // $params = [];
-        $randomKey = $this->getRandomKey();
-        $symmetricKeyEncrpt = (new Rsa($this->submissionPass))->encrypt($randomKey);
-        $jsonDataEncrypt = (new Aes($symmetricKeyEncrpt))->encrypt(json_encode($params));
+        $aesKey = $this->getRandomKey();
+        $symmetricKeyEncrpt = (new Rsa($this->submissionPass))->encrypt($aesKey);
+        $jsonDataEncrypt = (new Aes($aesKey))->encrypt(json_encode($params));
         $dataMap = [
             'dataMap' => [
                   'uniqueNo' => $this->uniqueNo,
@@ -153,20 +152,19 @@ class PrepaidCard
                   'jsonDataEncrypt' => $jsonDataEncrypt,
               ],
         ];
-        //$body = ['dataMap' => str_replace('"', '\"', json_encode($dataMap))];
-        $body = ['dataMap' =>  json_encode($dataMap)];
+        $requestBody = ['dataMap' => json_encode($dataMap)];
 
         $headers = [];
         $headers['_api_name'] = $api;
         $headers['_api_version'] = $this->version;
         $headers['_api_access_key'] = $this->ak;
         $headers['_api_timestamp'] = $this->getMillisTime();
-        $headers['_api_signature'] = $this->sign($body, $headers);
+        $headers['_api_signature'] = $this->sign($requestBody, $headers);
 
-        $response = $this->csbClient->post('/CSB', $body, $headers);
-        $body = $response->json(false)->body;
-        if ($body->dataMap->state != 0) {
-            throw  new Exception\Csb($body->dataMap->errorCode);
+        $response = $this->csbClient->post('/CSB', $requestBody, $headers);
+        $responseBody = $response->json(false)->body;
+        if ($responseBody->dataMap->state != 0) {
+            throw  new Exception\Csb($responseBody->dataMap->errorCode);
         }
 
         return $response;
