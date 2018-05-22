@@ -2,7 +2,7 @@
 
 return  [
     'version' => '1.0.0',
-    'requestUr' => 'http://101.132.39.129:8086/CSB',
+    'requestUrl' => 'http://101.132.39.129:8086/CSB',
     'ak' => 'e7ec2742cad4432d9700ecb8d56d28a0',
     'sk' => 'y8ONI4Ifx4iWreeOJGRBkK+Im2o=',
     'uniqueNo' => '310104F5201889100033',
