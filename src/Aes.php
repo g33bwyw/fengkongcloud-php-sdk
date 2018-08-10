@@ -39,7 +39,7 @@ class Aes
     {
         $pad = $blockSize - (strlen($text) % $blockSize);
 
-        return $text . str_repeat(chr($pad), $pad);
+        return $text.str_repeat(chr($pad), $pad);
     }
 
     /**

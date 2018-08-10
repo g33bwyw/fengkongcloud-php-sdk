@@ -147,9 +147,9 @@ class PrepaidCard
         $jsonDataEncrypt = (new Aes($aesKey))->encrypt(json_encode($params));
         $dataMap = [
             'dataMap' => [
-                  'uniqueNo' => $this->uniqueNo,
+                  'uniqueNo'           => $this->uniqueNo,
                   'symmetricKeyEncrpt' => $symmetricKeyEncrpt,
-                  'jsonDataEncrypt' => $jsonDataEncrypt,
+                  'jsonDataEncrypt'    => $jsonDataEncrypt,
               ],
         ];
         $requestBody = ['dataMap' => json_encode($dataMap)];
@@ -195,7 +195,7 @@ class PrepaidCard
      */
     protected function sign(array $body = [], array $headers = [])
     {
-        $params = array();
+        $params = [];
 
         foreach ($body as $k => $v) {
             $params[$k] = $v;
