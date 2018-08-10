@@ -73,7 +73,7 @@ class Client
 
         $end = microtime(true);
         if (function_exists('info')) {
-            info(sprintf('req(url:%s,cost:%.3fs)', $this->baseUri. $url, $end - $start));
+            info(sprintf('req(url:%s,cost:%.3fs)', $this->baseUri.$url, $end - $start));
         }
 
         return new Response($response);

@@ -17,7 +17,7 @@ class Rsa
 
     public function __construct(string $key = '')
     {
-        $pem = "-----BEGIN PRIVATE KEY-----\n" . chunk_split($key, 64, "\n") . '-----END PRIVATE KEY-----';
+        $pem = "-----BEGIN PRIVATE KEY-----\n".chunk_split($key, 64, "\n").'-----END PRIVATE KEY-----';
 
         $this->privateKey = openssl_pkey_get_private($pem);
     }
