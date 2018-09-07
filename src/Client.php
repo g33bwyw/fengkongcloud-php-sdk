@@ -54,10 +54,14 @@ class Client
     {
         $url = $args[0];
         $vars = isset($args[1]) ? $args[1] : [];
-        $headers = (isset($args[2]) ? $args[2] : []) + ['User-Agent' => 'ishumei-php-sdk'];
+        $headers = (isset($args[2]) ? $args[2] : []) + ['User-Agent' => 'ishumei-fengkongcloud-php-sdk'];
 
         if (strtolower($method) == 'post') {
-            $params = ['form_params' => $vars, 'headers' => $headers];
+            if ($headers['content-type'] == 'application/json') {
+                $params = ['body' => json_encode($vars), 'headers' => $headers];
+            } else {
+                $params = ['form_params' => $vars, 'headers' => $headers];
+            }
         } else {
             $params = ['query' => $vars, 'headers' => $headers];
         }

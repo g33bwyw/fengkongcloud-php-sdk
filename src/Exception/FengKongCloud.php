@@ -13,7 +13,7 @@ namespace Bqrd\IShuMei\Exception;
 
 use Exception;
 
-class SinglePurposeFengKongCloud extends Exception
+class FengKongCloud extends Exception
 {
     /**
      * errCode 错误码

@@ -65,7 +65,7 @@ class Response implements Iterator, ArrayAccess
             throw new Exception($reason, $this->statusCode);
         }
         $this->json = $this->json(true);
-        if (!isset($this->json['code']) || $this->json['code'] != 200) {
+        if (!isset($this->json['code']) || $this->json['code'] != 1100) {
             throw new Exception($this->json['message'], $this->json['code']);
         }
     }

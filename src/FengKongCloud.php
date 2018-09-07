@@ -134,19 +134,18 @@ class FengKongCloud
      */
     public function batchQuery(array $data = [], array $criteria = [])
     {
-        $json = json_encode(array_merge($criteria, [
+        $params['timestamp'] = $this->getMillisTime();
+        $data = array_merge($criteria, [
             'accessKey' => $this->accessKey,
             'appId' => $this->appId,
             'data' => $params,
-        ]));
+        ]);
 
-        $response = $this->client->post('/v2/account/risk_accounts', $json);
-        $responseBody = $response->json(false)->body;
-        if ($responseBody->dataMap->state != 0) {
-            throw  new Exception\FengKongCloud($responseBody->dataMap->errorCode);
-        }
+        $headers = [
+            'content-type' => 'application/json',
+        ];
 
-        return $response;
+        return  $this->client->post('/v2/account/risk_accounts', $data, $headers);
     }
 
     /**
@@ -158,19 +157,30 @@ class FengKongCloud
      */
     protected function request(string $uri = '', array $params = [], string $eventId = 'register')
     {
-        $json = json_encode([
+        $params['timestamp'] = $this->getMillisTime();
+        $data = [
             'accessKey' => $this->accessKey,
             'appId' => $this->appId,
             'eventId' => $eventId,
             'data' => $params,
-        ]);
+        ];
+        $headers = [
+            'content-type' => 'application/json',
+        ];
 
-        $response = $this->client->post($uri, $json);
-        $responseBody = $response->json(false)->body;
-        if ($responseBody->dataMap->state != 0) {
-            throw  new Exception\FengKongCloud($responseBody->dataMap->errorCode);
-        }
+        return  $this->client->post($uri, $data, $headers);
+    }
 
-        return $response;
+    /**
+     * getMillisTime 获取微秒.
+     *
+     * @return mixed
+     */
+    protected function getMillisTime()
+    {
+        $microtime = microtime();
+        $comps = explode(' ', $microtime);
+
+        return sprintf('%d%03d', $comps[1], $comps[0] * 1000);
     }
 }
