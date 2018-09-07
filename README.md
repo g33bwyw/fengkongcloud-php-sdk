@@ -38,25 +38,16 @@ return  [
 
 ```php
 use Bqrd\IShuMei\FengKongCloudFacade;
-$card = [
-	'cardID' => '123',
-	'cardNo' => '123',
-	'cardMon' => '100',
-	'serialNo' => '111',
-	'cardBalance' => '1000',
-	'applyTime' => '20180404000000',
-	'beginDate' => '20181212',
-	'expiryDate' => '20991231',
-	'isRegister' => '0',
-	'rev' => ''
+$register = [
+          'tokenId' => '23432',
+          'eventName' => '注册',
+          'deviceId' => 'dfafasfdas',
+          'ip' => '172.16.76.251',
+          'signupPlatform' => 'phone',
+          'phone' => '18611615170',
+          'getCoupon' => 0,
 ];
 
-FengKongCloudFacade :: sendCard($card); //发卡
-
-$recharge = [];
-FengKongCloudFacade :: addRecharge($recharge); //充值
-
-$consumption = [];
-FengKongCloudFacade :: addConsumption($consumption); //消费
+FengKongCloudFacade::register($register); //注册
 
 ```
