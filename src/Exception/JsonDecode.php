@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Liugj\Csb\Exception;
+namespace Bqrd\IShuMei\Exception;
 
 use Exception;
 

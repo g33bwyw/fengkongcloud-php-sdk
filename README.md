@@ -1,4 +1,4 @@
-上海单用途预付卡Sdk
+数美天网系统php-sdk
 
 ==============
 
@@ -7,18 +7,18 @@
 通过  composer 安装:
 
 ```bash
-composer require liugj/sh-single-purpose-prepaid-card-sdk
+composer require bqrd/fengkongcloud-php-sdk
 ```
 
 修改bootstrap/app.php 增加
 
 ```php
-$app->register(Liugj\Csb\PrepaidCardServiceProvider::class);
+$app->register(Bqrd\IShuMei\FengKongCloudServiceProvider::class);
 ```
 
 ## 配置
 
-增加配置文件 `config/sh-single-purpose-prepaid-card-sdk.php`
+增加配置文件 `config/fengkongcloud-php-sdk.php`
 
 ```php
 
@@ -37,7 +37,7 @@ return  [
 ## 使用
 
 ```php
-use Liugj\Csb\PrepaidCardFacade;
+use Bqrd\IShuMei\FengKongCloudFacade;
 $card = [
 	'cardID' => '123',
 	'cardNo' => '123',
@@ -51,12 +51,12 @@ $card = [
 	'rev' => ''
 ];
 
-PrepaidCardFacade :: sendCard($card); //发卡
+FengKongCloudFacade :: sendCard($card); //发卡
 
 $recharge = [];
-PrepaidCardFacade :: addRecharge($recharge); //充值
+FengKongCloudFacade :: addRecharge($recharge); //充值
 
 $consumption = [];
-PrepaidCardFacade :: addConsumption($consumption); //消费
+FengKongCloudFacade :: addConsumption($consumption); //消费
 
 ```

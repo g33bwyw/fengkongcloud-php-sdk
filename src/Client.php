@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Liugj\Csb;
+namespace Bqrd\IShuMei;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
 
@@ -54,7 +54,7 @@ class Client
     {
         $url = $args[0];
         $vars = isset($args[1]) ? $args[1] : [];
-        $headers = (isset($args[2]) ? $args[2] : []) + ['User-Agent' => 'sh-single-purpose-prepaid-card-sdk'];
+        $headers = (isset($args[2]) ? $args[2] : []) + ['User-Agent' => 'ishumei-php-sdk'];
 
         if (strtolower($method) == 'post') {
             $params = ['form_params' => $vars, 'headers' => $headers];
@@ -68,7 +68,7 @@ class Client
 
         $start = microtime(true);
         $response = (new GuzzleHttpClient(
-            ['base_uri' => $this->baseUri, 'timeout' => $this->options['timeout'] ?? 3.0]
+            ['base_uri' => $this->baseUri, 'timeout' => $this->options['timeout'] ?? 1.0]
         ))->request($method, $url, $params);
 
         $end = microtime(true);

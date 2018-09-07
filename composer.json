@@ -1,7 +1,7 @@
 {
-    "name": "liugj/sh-single-purpose-prepaid-card-sdk",
-    "description": "上海单用途预付卡",
-    "keywords": ["上海单用途预付卡", "Shanghai Single Purpose Prepaid Card Sdk", "laravel"],
+    "name": "bqrd-liugj/fengkongcloud-php-sdk",
+    "description": "数美风控云php-client-sdk",
+    "keywords": ["数美风控云", "sdk", "lumen"],
     "license": "MIT",
         "authors": [
         {
@@ -20,7 +20,7 @@
       },
         "autoload": {
             "psr-4": {
-                "Liugj\\Csb\\": "src/"
+                "Bqrd\\IShuMei\\": "src/"
             }
         }
 }

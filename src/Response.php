@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Liugj\Csb;
+namespace Bqrd\IShuMei;
 
 use ArrayAccess;
 use GuzzleHttp\Psr7\Response as GuzzleHttpResponse;
@@ -129,7 +129,7 @@ class Response implements Iterator, ArrayAccess
     {
         $json = json_decode($this->body, $assoc);
         if (!$json) {
-            throw new \Liugj\Csb\Exception\JsonDecode(json_last_error_msg());
+            throw new \Bqrd\IShuMei\Exception\JsonDecode(json_last_error_msg());
         }
 
         return $json;
@@ -260,7 +260,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function offsetSet($key, $value)
     {
-        throw new \Liugj\Csb\Exception\ArrayAccess('Decoded response data is immutable.');
+        throw new \Bqrd\IShuMei\Exception\ArrayAccess('Decoded response data is immutable.');
     }
 
     /**
@@ -272,7 +272,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function offsetUnset($key)
     {
-        throw new \Liugj\Csb\Exception\ArrayAccess('Decoded response data is immutable.');
+        throw new \Bqrd\IShuMei\Exception\ArrayAccess('Decoded response data is immutable.');
     }
 
     /**

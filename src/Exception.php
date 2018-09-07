@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Liugj\Csb;
+namespace Bqrd\IShuMei;
 
 class Exception extends \Exception
 {
