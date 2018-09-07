@@ -32,8 +32,8 @@ class FengKongCloudServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(FengKongCloud::class, function ($app) {
-            $app->configure('sh-single-purpose-prepaid-card-sdk');
-            $config = $app->make('config')->get('sh-single-purpose-prepaid-card-sdk');
+            $app->configure('fengkongcloud-php-sdk');
+            $config = $app->make('config')->get('fengkongcloud-php-sdk');
 
             return new FengKongCloud($config);
         });
