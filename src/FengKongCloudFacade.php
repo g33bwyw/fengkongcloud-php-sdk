@@ -13,7 +13,7 @@ namespace Bqrd\IShuMei;
 
 use Illuminate\Support\Facades\Facade;
 
-class PrepaidCardFacade extends Facade
+class FengKongCloudFacade extends Facade
 {
     /**
      * getFacadeAccessor.
@@ -24,6 +24,6 @@ class PrepaidCardFacade extends Facade
      */
     public static function getFacadeAccessor()
     {
-        return PrepaidCard::class;
+        return FengKongCloud::class;
     }
 }

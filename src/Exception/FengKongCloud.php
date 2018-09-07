@@ -13,7 +13,7 @@ namespace Bqrd\IShuMei\Exception;
 
 use Exception;
 
-class SinglePurposePrepaidCard extends Exception
+class SinglePurposeFengKongCloud extends Exception
 {
     /**
      * errCode 错误码

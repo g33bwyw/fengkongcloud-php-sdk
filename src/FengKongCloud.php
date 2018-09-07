@@ -20,7 +20,7 @@ class FengKongCloud
      *
      * @var string
      */
-    protected $version = '1.0.0';
+    protected $version = '2.0';
     /**
      * requestUrl 请求Url.
      *

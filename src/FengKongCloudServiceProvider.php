@@ -13,7 +13,7 @@ namespace Bqrd\IShuMei;
 
 use Illuminate\Support\ServiceProvider;
 
-class PrepaidCardServiceProvider extends ServiceProvider
+class FengKongCloudServiceProvider extends ServiceProvider
 {
     /**
      * defer.
@@ -31,11 +31,11 @@ class PrepaidCardServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(PrepaidCard::class, function ($app) {
+        $this->app->singleton(FengKongCloud::class, function ($app) {
             $app->configure('sh-single-purpose-prepaid-card-sdk');
             $config = $app->make('config')->get('sh-single-purpose-prepaid-card-sdk');
 
-            return new PrepaidCard($config);
+            return new FengKongCloud($config);
         });
     }
 
@@ -48,6 +48,6 @@ class PrepaidCardServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [PrepaidCard::class];
+        return [FengKongCloud::class];
     }
 }
